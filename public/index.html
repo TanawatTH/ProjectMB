@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsenui.css">
+  <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsen-css-components.min.css">
+  <script src="https://unpkg.com/onsenui/js/onsenui.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+  <script src="ejs.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/5.5.0/firebase.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/5.3.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/5.3.0/firebase-firestore.js"></script>
+  <script>
+    // Initialize Firebase
+    var config = {
+      apiKey: "AIzaSyDBKnTfXJoRQAjOXaWyItE35Q7qPPdxl70",
+      authDomain: "shopee-69f3b.firebaseapp.com",
+      databaseURL: "https://shopee-69f3b.firebaseio.com",
+      projectId: "shopee-69f3b",
+      storageBucket: "shopee-69f3b.appspot.com",
+      messagingSenderId: "1025816911376"
+    };
+    firebase.initializeApp(config);
+// Initialize Cloud Firestore through Firebase
+var db = firebase.firestore();
+
+// Disable deprecated features
+db.settings({
+  timestampsInSnapshots: true
+});
+  </script>
+
+  <style>
+    .toolbaricon {
+      padding-left: 5px;
+      padding-bottom: 5px;
+      padding-right: 5px;
+      color: orange;
+    }
+  </style>
+</head>
+
+
+<body>
+  <ons-page>
+    <ons-toolbar>
+      <div class="left">
+        <ons-icon class="toolbaricon" size="30px" icon="fa-shopping-bag">
+        </ons-icon>
+      </div>
+      <div class="center" id="appname">#</div>
+      <div class="right">
+        <ons-icon class="toolbaricon" size="30px" icon="md-help">
+        </ons-icon>
+      </div>
+    </ons-toolbar>
+
+    <ons-tabbar swipeable position="auto">
+      <ons-tab page="tab1.html" label="Home" icon="ion-home, material:md-home" badge="7" active>
+      </ons-tab>
+      <ons-tab page="tab2.html" label="Cart" icon="fa-shopping-cart" active-icon="fa-shopping-cart">
+      </ons-tab>
+      <ons-tab page="tab3.html" label="Cart2" icon="fa-shopping-cart" active-icon="fa-shopping-cart">
+      </ons-tab>
+    </ons-tabbar>
+  </ons-page>
+
+  <template id="tab1.html">
+    <ons-page id="Tab1">
+      <p style="text-align: center; margin-top: 10px;">
+        <ons-search-input placeholder="Search" onchange="ons.notification.alert('Searched for: ' + this.value)"></ons-search-input>
+      </p>
+      <ons-carousel swipeable auto-scroll overscrollable id="carousel" style="height: 300px;">
+        <ons-carousel-item id="carousel1" style="background: url('images/1.jpg') no-repeat center; background-size: contain;">
+        </ons-carousel-item>
+        <ons-carousel-item id="carousel2" style="background: url('images/2.jpg') no-repeat center; background-size: contain;">
+        </ons-carousel-item>
+        <ons-carousel-item id="carousel3" style="background: url('images/3.jpg') no-repeat center; background-size: contain;">
+        </ons-carousel-item>
+      </ons-carousel>
+
+      <div id="icons">
+
+      <script id="icon_template" type="text/template">
+        <ons-row style="height:120px" vertical-align="center">  
+        <% categories.forEach(function(category){%>  
+        <ons-col style="background:#66ff99;" width="33%">
+          <p style="text-align: center; margin: 10px;">
+            <ons-icon size="60px" icon="<%= category.icon %>"></ons-icon>
+          </p>
+          <p style="text-align: center; margin: 10px;" id="icon1_text">
+            <%= category.name %>
+          </p>
+        </ons-col>
+        <%});%>
+        </ons-row>
+        </script></div>
+
+
+    </ons-page>
+  </template>
+
+  <template id="tab2.html">
+    <ons-page id="Tab2">
+      <ons-list>
+        <ons-list-header>Shopping Cart</ons-list-header>
+        <div id="icon"></div>
+
+      <script id="template" type="text/template">
+        <% cart.forEach(function(cart){%>  
+        <ons-list-item>
+            
+          <div class="left">
+            <img class="list-item__thumbnail" src="<%= cart.photo %>">
+          </div>
+          <div class="center">
+            <span class="list-item__title"><%= cart.itemname %></span>
+            <span class="list-item__subtitle" style="color: blue"><%= cart.price %></span>
+          </div>
+          <div class="right">
+            <p style="text-align: center; margin: 10px;">
+              <ons-icon style="color: grey" size="30px" icon="md-delete"></ons-icon>
+            </p>
+          </div>
+        </ons-list-item>
+       
+        <%});%>
+      
+        </script>
+      </ons-list>
+      <p style="text-align: center; margin: 10px;">
+        <ons-button modifier="large">PROCEED TO PAY</ons-button>
+      </p>
+    </ons-page>
+  </template>
+
+
+  <template id="tab3.html">
+    <ons-page id="Tab3">
+      
+      <p style="text-align: center; margin: 10px;">
+        <ons-button modifier="large" onclick="addNewData();">Add New Data</ons-button>
+      </p>
+   
+ 
+
+
+
+    </ons-page>
+  </template>
+</body>
+<script>
+  getHomeData();
+  document.addEventListener('prechange', function (event) {
+    if (event.index == 0) {
+      console.log('Home clicked');
+      // get data for home screen  
+      getHomeData();
+    } else if (event.index == 1) {
+      console.log('Cart clicked');
+      // get data for cart screen  
+      getCartData();
+    }
+    else if (event.index == 2) {
+      console.log('p clicked');
+      // get data for cart screen  
+      getAllProduct();
+    }
+  });
+  function getHomeData() {
+    var docRef = db.collection("UI").doc("home");
+
+    docRef.get().then(function (doc) {
+      if (doc.exists) {
+        console.log("Document data:", doc.data());
+        var data = doc.data();
+        $('#appname').html(data.appname);
+      var style = "background: url('images/" + data.slides[0] + "') no-repeat center; background-size: contain;'";
+      $('#carousel1').attr('style', style)
+      var icon_template = $('#icon_template').html();
+      var html = ejs.render(icon_template, {categories : data.categories});
+      $('#icons').html(html)
+      } else {
+        // doc.data() will be undefined in this case
+        console.log("No such document!");
+      }
+    }).catch(function (error) {
+      console.log("Error getting document:", error);
+    });
+
+    // $.getJSON('home.json', function (data) {
+    //   console.log(data);
+    //   $('#appname').html(data.appname);
+    //   var style = "background: url('images/" + data.slides[0] + "') no-repeat center; background-size: contain;'";
+    //   $('#carousel1').attr('style', style)
+    //   var icon_template = $('#icon_template').html();
+    //   var html = ejs.render(icon_template, {categories : data.categories});
+    //   $('#icons').html(html);
+    // });
+  }
+  function getCartData() {
+    var docRef = db.collection("UI").doc("cart");
+
+docRef.get().then(function (doc) {
+  if (doc.exists) {
+    console.log("Document data:", doc.data());
+        var data = doc.data();
+  var icon_template = $('#template').html();
+  var html = ejs.render(icon_template, {cart: data.cart});
+  $('#icon').html(html)
+  } else {
+    // doc.data() will be undefined in this case
+    console.log("No such document!");
+  }
+}).catch(function (error) {
+  console.log("Error getting document:", error);
+});
+
+ }
+function getAllProduct(){
+  var allproductRef = db.collection("PRODUCTS").where("category","==","sport");
+  allproductRef.get().then(function(querySnapshot) {
+    querySnapshot.forEach(function(doc) {
+        // doc.data() is never undefined for query doc snapshots
+        console.log(doc.id, " => ", doc.data());
+    });
+});
+
+
+}
+function addNewData(){
+  var data ={
+    pid : '4',
+    title : 'IPhoneXS',
+    price : 50000,
+    category : 'electronic'
+  }
+  db.collection("PRODUCTS").add(data)
+  .then(function(docRef) {
+    console.log("Document written with ID: ", docRef.id);
+})
+.catch(function(error) {
+    console.error("Error adding document: ", error);
+});
+
+
+}
+
+
+
+</script>
+
+</html>
