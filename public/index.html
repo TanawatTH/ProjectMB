@@ -42,8 +42,7 @@ db.settings({
 
 
 <body>
-    <ons-navigator swipeable id="myNavigator" page="tab3.html">
-    
+  <ons-navigator swipeable id="myNavigator" page="tab3.html">
   <ons-page>
     <ons-toolbar>
       <div class="left">
@@ -66,7 +65,6 @@ db.settings({
       </ons-tab>
     </ons-tabbar>
   </ons-page>
-</ons-navigator>
 
   <template id="tab1.html">
     <ons-page id="Tab1">
@@ -166,7 +164,7 @@ db.settings({
           %>
 <ons-col width="33%" >
   <ons-card onclick="detail('<%- products.pid %>')">
-        <img class="" src="<%= products.picc %>" width="99%"height="70px"><br>
+        <img class="" src="<%= products.photo %>" width="99%"height="70px"><br>
 <%= products.Category %><br>
 <%= products.title %><br>
 ฿<%= products.price %>
@@ -184,41 +182,47 @@ db.settings({
 
 
   <template id="tab4.html">
-    <ons-page>
-      <ons-toolbar>
-        <div class="left">
-          <ons-back-button>Page 1</ons-back-button>
-        </div>
-        <div class="center"></div>
-      </ons-toolbar>
-      <div id="detail"></div>
-      <script id="detail_template" type="text/template"> 
-        <ons-card>
-         
-         <% detail.forEach(function(data){   
-          var data = data.data(); %>
-          <div class="title">
-            <%= data.price%>
+      <ons-page>
+        <ons-toolbar>
+          <div class="left">
+            <ons-back-button>Page 1</ons-back-button>
           </div>
-          <div class="content">
-            <div>
-              <%= data.title %>
+          <div class="center"></div>
+        </ons-toolbar>
+        <div id="detail"></div>
+        <script id="detail_template" type="text/template"> 
+          <ons-card>
+           
+           <% detail.forEach(function(data){   
+            var data = data.data(); %>
+          
+                <img src=" <%= data.photo%>" alt=""height="300px"width="100%">
+               
+
+            <div class="title">
+              <%= data.title%>
             </div>
-            <ons-list>
-              <ons-list-header>Bindings</ons-list-header>
-              <ons-list-item>Vue</ons-list-item>
-              <ons-list-item>Angular</ons-list-item>
-              <ons-list-item>React</ons-list-item>
-            </ons-list>
-          </div>
-          <ons-button onclick="addtocart('<%= data.pid %>')">ADD TO CART</ons-button>
-          <%})%>
-        </ons-card>
-     
-    
-    </Script>
-    </ons-page>
-  </template>
+
+            <div class="content">
+              <div>
+                <%= data.price %>
+              </div>
+
+              <ons-list>
+                
+                <ons-list-item>Vue</ons-list-item>
+                <ons-list-item>Angular</ons-list-item>
+                <ons-list-item>React</ons-list-item>
+              </ons-list>
+            </div>
+            <ons-button onclick="addtocart('<%= data.pid %>')">ADD TO CART</ons-button>
+            <%})%>
+          </ons-card>
+       
+      
+      </Script>
+      </ons-page>
+    </template>
 
 
 </body>
