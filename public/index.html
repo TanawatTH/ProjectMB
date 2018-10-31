@@ -257,7 +257,7 @@ db.settings({
   //   }localStorage.clear();
   // });
   getHomeData()
-  //tatol();
+  tatol();
   document.addEventListener('prechange', function (event) {
     if (event.index == 0) {
       console.log('Home click');
@@ -458,6 +458,8 @@ document.getElementById('tabbar').setActiveTab(2);
     // const fruits = data[1];
 
   }
+
+
   function test(title){
 console.log("888",title);
 // for(var i =0;i<tests.length;i++){
@@ -472,7 +474,43 @@ console.log("888",title);
   
 
  }
-
+ var dataCart = [];
+function addtocart(add2cart){
+  localStorage.clear('quentinTarantino');
+localStorage.setItem('quentinTarantino',add2cart);
+var retrievedData = localStorage.getItem("quentinTarantino");
+console.log(retrievedData);
+dataCart.push(retrievedData);
+alert(dataCart);
+}
+//????????? array ??????????????? firebase ?????????????????? template
+function getData2cart(){
+  
+  var Delete=[]
+  document.getElementById('pic').innerHTML=""
+  console.log(dataCart);
+  var j=0
+  dataCart.forEach(function(remove) {
+    Delete.push(j)
+    console.log(Delete)
+    j++
+  });
+var testnum = 0;
+  dataCart.forEach(function(dataCart){
+    var apr = db.collection("PRODUCTS").where("pid","==",dataCart);
+    apr.get().then(function (querySnapshot) {
+      console.log(querySnapshot.docs)
+      var pic_template = $('#pic_template').html();
+      var  html = ejs.render(pic_template, { cart: querySnapshot.docs,num:testnum });
+      console.log(html);
+     
+      
+     $('#pic').append(html);
+        testnum = testnum +1;
+    })  
+  })
+ 
+}
 </script>
 
 </html>
