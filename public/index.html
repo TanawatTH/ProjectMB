@@ -483,6 +483,35 @@ var testnum = 0;
   })
  
 }
+function deleteb(i) {
+    console.log(i);
+
+    console.log(dataCart);
+
+    var remove = dataCart.splice(i, 1)
+
+    alert("??????????????");
+    getData2cart()
+
+  }
+  var priceitem = 0;
+
+  function totalprice(price1) {
+    var price1 = parseInt(price1, 10)
+    console.log(price1);
+
+    priceitem = priceitem + price1;
+    $('#showprice').html("<p><b>&nbsp; Total Price is : </b>" + priceitem + " ?</p>");
+
+  }
+  function delprice(price2) {
+    var price2 = parseInt(price2, 10)
+    console.log(price2);
+
+    priceitem = priceitem - price2;
+    $('#showprice').html("<p><b>&nbsp; Total Price is : </b>" + priceitem + " ?</p>");
+
+  }
 </script>
 
 </html>
