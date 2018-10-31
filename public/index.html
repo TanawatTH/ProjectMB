@@ -456,8 +456,22 @@ document.getElementById('tabbar').setActiveTab(2);
         
       })
     // const fruits = data[1];
+
   }
+  function test(title){
+console.log("888",title);
+// for(var i =0;i<tests.length;i++){
+    
+ 
+    console.log('tset',title);
+       
+        
+        var product_template = $('#product_template').html();
+         var html = ejs.render(product_template, { product: title });
+        $('#product').html(html);
   
+
+ }
 
 </script>
 
