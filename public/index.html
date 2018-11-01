@@ -10,6 +10,7 @@
   <script src="https://www.gstatic.com/firebasejs/5.5.0/firebase.js"></script>
   <script src="https://www.gstatic.com/firebasejs/5.3.0/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/5.3.0/firebase-firestore.js"></script>
+  <link href="https://fonts.googleapis.com/css?family=Baloo+Bhaijaan|Poor+Story" rel="stylesheet">
   <script>
     // Initialize Firebase
     var config = {
@@ -31,21 +32,29 @@ db.settings({
   </script>
 
   <style>
+    *{
+      font-family: 'Poor Story', cursive;
+      font-family: 'Baloo Bhaijaan', cursive;
+   }
     .toolbaricon {
       padding-left: 5px;
       padding-bottom: 5px;
       padding-right: 5px;
-      color: orange;
+      color: rgb(204, 196, 181);
     }
+  
+  
+    
   </style>
+ 
 </head>
 
 
-<body>
+<body >
   <ons-navigator swipeable id="myNavigator" page="tab3.html">
-  <ons-page>
-    <ons-toolbar>
-      <div class="left">
+  <ons-page >
+    <ons-toolbar style="background:#FF66CC">
+      ///<div class="left">
         <ons-icon class="toolbaricon" size="30px" icon="fa-shopping-bag">
         </ons-icon>
       </div>
@@ -56,12 +65,12 @@ db.settings({
       </div>
     </ons-toolbar>
 
-    <ons-tabbar swipeable position="auto" id="tabbar">
-      <ons-tab page="tab1.html" label="Home" icon="ion-home, material:md-home"  active>
+    <ons-tabbar swipeable position="auto" id="tabbar"  >
+      <ons-tab page="tab1.html" label="Home" icon="ion-home, material:md-home"  active style="background:#FFFFFF">
       </ons-tab>
-      <ons-tab page="tab2.html" label="Cart" icon="fa-shopping-cart" active-icon="fa-shopping-cart">
+      <ons-tab page="tab2.html" label="Cart" icon="fa-shopping-cart" active-icon="fa-shopping-cart" style="background:#FFFF00">
       </ons-tab>
-      <ons-tab page="tab3.html" label="product" icon="fa-shopping-cart" active-icon="fa-shopping-cart">
+      <ons-tab page="tab3.html" label="product" icon="fa-shopping-cart" active-icon="fa-shopping-cart" style="background:#FFCC00"> 
       </ons-tab>
     </ons-tabbar>
   </ons-page>
@@ -86,7 +95,7 @@ db.settings({
           <script id="icon_template" type="text/template"> 
                     <ons-row class="category" style="text-align:center">      
                           <% categories.forEach(function(category){%>
-                      <ons-col style="background:#66ff99;" modifier="nodivider" id="  " onclick="changeTab('<%= category.name %>')"width="33%"value="<%= category.name %>">
+                      <ons-col style="background:<%= category.color %>" modifier="nodivider" id="  " onclick="changeTab('<%= category.name %>')"width="33%"value="<%= category.name %>">
                           <div >
                               <!-- <figure class="category_thumbnail"> -->
                                   <ons-icon id="icon1"size="60px" icon="<%= category.icon %>"></ons-icon>
@@ -98,22 +107,6 @@ db.settings({
                       <%});%></div>
                       </Script>
 
-
-<!-- 
-      <script id="icon_template" type="text/template">
-        <ons-row style="height:120px" vertical-align="center">  
-        <% categories.forEach(function(category){%>  
-        <ons-col style="background:#66ff99;" width="33%">
-          <p style="text-align: center; margin: 10px;">
-            <ons-icon size="60px" icon="<%= category.icon %>"></ons-icon>
-          </p>
-          <p style="text-align: center; margin: 10px;" id="icon1_text">
-            <%= category.name %>
-          </p>
-        </ons-col>
-        <%});%>
-        </ons-row>
-        </script></div> -->
 
 
     </ons-page>
@@ -130,7 +123,7 @@ db.settings({
                       %>
             <ons-list-item>
                 <div class="left">
-                    <img class="list-item__thumbnail" src="<%= cart.photo %>">
+                    <img class="list-item__thumbnail" src="<%= cart.photo[0] %>">
                 </div>
                 <div class="center">
                     <span class="list-item__title"><%= cart.itemname %></span>
@@ -164,13 +157,14 @@ db.settings({
         <% product.forEach(function(product){
           var products = product.data();
           %>
-<ons-col width="33%" >
-  <ons-card onclick="detail('<%- products.pid %>')">
-        <img class="" src="<%= products.photo[0] %>" width="99%"height="70px"><br>
+<ons-col width="50%"   >
+  <ons-card onclick="detail('<%- products.pid %>')"  >
+        <img class="" src="<%= products.photo[0] %>" width="99%" height="80px"><br>
 <%= products.Category %><br>
 <%= products.title %><br>
 ฿<%= products.price %>
-  </ons-card></ons-col>
+  </ons-card>
+</ons-col>
 
 <%});%> 
  </ons-row>
@@ -227,10 +221,7 @@ db.settings({
                 </div>
               <ons-list>
                 
-                <ons-list-item>Vue</ons-list-item>
-                <ons-list-item>Angular</ons-list-item>
-                <ons-list-item>React</ons-list-item>
-              </ons-list>
+               
             </div>
             <ons-button onclick="addtocart('<%= data.pid %>')">ADD TO CART</ons-button>
             <%})%>
@@ -293,15 +284,7 @@ db.settings({
       console.log("Error getting document:", error);
     });
 
-    // $.getJSON('home.json', function (data) {
-    //   console.log(data);
-    //   $('#appname').html(data.appname);
-    //   var style = "background: url('images/" + data.slides[0] + "') no-repeat center; background-size: contain;'";
-    //   $('#carousel1').attr('style', style)
-    //   var icon_template = $('#icon_template').html();
-    //   var html = ejs.render(icon_template, {categories : data.categories});
-    //   $('#icons').html(html);
-    // });
+    
   }
   function getCartData() {
     var docRef = db.collection("UI").doc("cart");
@@ -365,11 +348,7 @@ docRef.get().then(function (doc) {
                 console.log("Error getting documents: ", error);
               });
           }
-          // doc.data() is never undefined for query doc snapshots
-          // var product_template = $('#product_template').html();
-          // console.log(querySnapshot.docs);
-          // var html = ejs.render(product_template, { product: querySnapshot.docs });
-          // $('#product').html(html);
+        
         })
     }
   }
@@ -377,28 +356,17 @@ docRef.get().then(function (doc) {
     console.log(name)
     document.getElementById('tabbar').setActiveTab(2);
     localStorage.setItem('name', name);
-    // var name1 = localStorage.getItem('name');
-    //  getproductData(name1)
+    
   }
-    // var name1 = localStorage.getItem('name');
-    //  getproductData(name1)
-  
-//   db.collection("PRODUCTS").get()
-//         .then(function (querySnapshot) {
-//           // doc.data() is never undefined for query doc snapshots
-//           var product_template = $('#product_template').html();
-//           console.log(querySnapshot.docs);
-//           var html = ejs.render(product_template, { product: querySnapshot.docs });
-//           $('#product').html(html);
-// });
+    
+
 
 
 function detail(pid) {
     localStorage.setItem('id', pid);
     myNavigator.pushPage('tab4.html');
     showdetail()
-    // var name1 = localStorage.getItem('name');
-    //  getproductData(name1)
+    
   }
 
   function showdetail() {
@@ -430,7 +398,7 @@ function detail(pid) {
   console.log("xxx",item)
   localStorage.setItem('items', item);
   
-  console.log('tong',item);
+  
 test(item);
 document.getElementById('tabbar').setActiveTab(2);
     // localStorage.setItem('title', item);
@@ -452,7 +420,7 @@ document.getElementById('tabbar').setActiveTab(2);
 
 
   function test(title){
-console.log("888",title);
+console.log("tt",title);
 // for(var i =0;i<tests.length;i++){
     
  
@@ -474,7 +442,7 @@ console.log(retrievedData);
 dataCart.push(retrievedData);
 ons.notification.alert('Add product ' + retrievedData + ' from the basket!');
 }
-//????????? array ??????????????? firebase ?????????????????? template
+
 function getData2cart(){
   
   var Delete=[]
