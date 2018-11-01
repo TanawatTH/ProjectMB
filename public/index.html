@@ -57,11 +57,11 @@ db.settings({
     </ons-toolbar>
 
     <ons-tabbar swipeable position="auto" id="tabbar">
-      <ons-tab page="tab1.html" label="Home" icon="ion-home, material:md-home" badge="7" active>
+      <ons-tab page="tab1.html" label="Home" icon="ion-home, material:md-home"  active>
       </ons-tab>
       <ons-tab page="tab2.html" label="Cart" icon="fa-shopping-cart" active-icon="fa-shopping-cart">
       </ons-tab>
-      <ons-tab page="tab3.html" label="Cart2" icon="fa-shopping-cart" active-icon="fa-shopping-cart">
+      <ons-tab page="tab3.html" label="product" icon="fa-shopping-cart" active-icon="fa-shopping-cart">
       </ons-tab>
     </ons-tabbar>
   </ons-page>
@@ -166,7 +166,7 @@ db.settings({
           %>
 <ons-col width="33%" >
   <ons-card onclick="detail('<%- products.pid %>')">
-        <img class="" src="<%= products.photo %>" width="99%"height="70px"><br>
+        <img class="" src="<%= products.photo[0] %>" width="99%"height="70px"><br>
 <%= products.Category %><br>
 <%= products.title %><br>
 ฿<%= products.price %>
@@ -193,12 +193,22 @@ db.settings({
         </ons-toolbar>
         <div id="detail"></div>
         <script id="detail_template" type="text/template"> 
-          <ons-card>
+         <ons-card>
            
            <% detail.forEach(function(data){   
             var data = data.data(); %>
-          
-                <img src=" <%= data.photo%>" alt=""height="300px"width="100%">
+           
+              <ons-carousel swipeable auto-scroll overscrollable id="carousel" style="height: 300px;">
+                     
+                    
+                  <ons-carousel-item id="carousel1Datail" style="background: url('<%= data.photo[0] %>') no-repeat center; background-size: contain;">
+                  </ons-carousel-item>
+                  <ons-carousel-item id="carousel2Datail" style="background: url('<%= data.photo[1] %>') no-repeat center; background-size: contain;">
+                  </ons-carousel-item>
+                  <ons-carousel-item id="carousel3Datail" style="background: url('<%= data.photo[2] %>') no-repeat center; background-size: contain;">
+                  </ons-carousel-item>
+    
+           </ons-carousel>
                
 
             <div class="title">
