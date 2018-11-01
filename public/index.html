@@ -206,10 +206,15 @@ db.settings({
             </div>
 
             <div class="content">
+                <P>Price :</P>
               <div>
                 <%= data.price %>
               </div>
-
+              <P>Description : </P>
+              <div class="content">
+                <div>
+                  <%= data.des %>
+                </div>
               <ons-list>
                 
                 <ons-list-item>Vue</ons-list-item>
@@ -402,6 +407,8 @@ function detail(pid) {
     localStorage.clear();
   }
 
+
+///// search
   function search(search) {
    
    const filterItems = (needle, heystack) => {
@@ -455,7 +462,7 @@ localStorage.setItem('quentinTarantino',add2cart);
 var retrievedData = localStorage.getItem("quentinTarantino");
 console.log(retrievedData);
 dataCart.push(retrievedData);
-alert(dataCart);
+ons.notification.alert('Add product ' + retrievedData + ' from the basket!');
 }
 //????????? array ??????????????? firebase ?????????????????? template
 function getData2cart(){
